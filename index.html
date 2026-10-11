@@ -596,13 +596,13 @@ ON CONFLICT (item_id, buyer_id) DO NOTHING</pre>
         <dd><strong>SQL 파일 1개를 KPI 1개로</strong> 정의하고, 매일 07시 <strong>스케줄러</strong>가 산출·저장·전일/전주 대비·전송을 자동 처리함. 동일 일자를 재산출해도 값이 중복되지 않도록(<strong>멱등성</strong>) 설계하고, 과거 일자 재산출(백필)을 지원함</dd>
       </dl>
       <ul class="chips"><li>Spring Boot</li><li>@Scheduled</li><li>SQL</li><li>Backfill</li><li>Slack</li></ul>
-      <figure class="shot-figure">
+      <figure class="shot-figure" style="max-width:588px">
         <img class="shot" src="img/kpi_slack.webp" alt="Slack 채널에 KPI Daily Report 앱이 보낸 일일 KPI 메시지: 2026-10-10 기준 8개 지표와 전일·전주 대비 증감" width="588" height="230" loading="lazy">
         <figcaption>Slack Incoming Webhook으로 실제 수신한 리포트입니다. 연동 검증 중 Spring Boot 4의 모듈 분리로 웹훅 설정 시 애플리케이션이 기동되지 않는 문제를 발견해 수정했습니다.</figcaption>
       </figure>
-      <figure class="shot-figure" style="max-width:none">
-        <img class="shot" src="img/kpi_detail.webp" alt="일일 KPI 리포트 메시지(DAU, MAU, 신규 가입, 매출, 결제자 수, ARPPU 등 8개 지표와 전일·전주 대비 증감)와 최근 40일 DAU·매출 추이 그래프" width="1200" height="470" loading="lazy">
-        <figcaption>120일치 데모 데이터로 실제 실행한 결과입니다. 매일 아침 KPI 8종을 산출해 전일·전주 대비와 함께 전송하고, 일자별로 적재해 추이를 확인합니다.</figcaption>
+      <figure class="shot-figure" style="max-width:500px">
+        <img class="shot" src="img/kpi_chart.webp" alt="최근 40일 DAU와 매출 추이 그래프. DAU는 주말마다 하락하는 주기가 보임" width="500" height="428" loading="lazy">
+        <figcaption>120일치 데모 데이터로 산출해 일자별로 적재한 KPI 추이입니다.</figcaption>
       </figure>
       <dl class="status">
         <dt>현재</dt>
