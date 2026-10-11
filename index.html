@@ -244,7 +244,21 @@ footer { border-top: 1px solid var(--line); padding-top: 24px; display: flex; fl
   .thumb-wide, .thumb-wide.shot { aspect-ratio: 16 / 9; }
   .feature { padding: 20px; }
 }
+@page { size: A4; margin: 14mm 12mm; }
 @media print {
+  /* 인쇄는 흰 바탕 · 카드 테두리 없이 흐르는 문서로 */
+  :root { --bg: #ffffff; }
+  body { background: #fff; font-size: 10.5pt; }
+  .wrap { gap: 28px; max-width: none; }
+  .feature { border: 0; padding: 0; background: none; gap: 14px; }
+  .feature .thumb-wide, .feature > img.shot { max-height: 70mm; object-fit: cover; object-position: top; }
+  .shot-figure { max-width: 120mm !important; }
+  .shot-pair { max-width: 150mm; }
+  .arch { min-width: 0; }
+  .detail { padding-top: 18px; margin-top: 8px; }
+  details.ts { border-color: #dde1e7; }
+  /* 프로젝트·걸어온 길은 새 페이지에서 시작 (제목이 페이지 끝에 홀로 남지 않게) */
+  .detail, section[aria-labelledby="path"] { break-before: page; border-top: 0; }
   .copy, .draft-note, .pcard-more { display: none; }
   /* PDF는 전부 펼친 상태라 바로가기 카드는 빼고, 그림·카드가 페이지 경계에서 잘리지 않게 */
   #cards { display: none; }
