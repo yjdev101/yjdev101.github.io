@@ -1,0 +1,393 @@
+<title>윤재중 포트폴리오</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: 한 줄 세로 흐름, 왼쪽 정렬. 프로젝트는 탭(경로 모양 라벨), 트러블슈팅은 장애 보고서 카드 */
+:root {
+  --bg: #f5f6f8;
+  --surface: #ffffff;
+  --fg: #17202b;
+  --muted: #5b6676;
+  --line: #dde1e7;
+  --accent: #2552c4;
+  --accent-soft: #e6ecfa;
+  --issue: #b4560c;
+  --issue-soft: #fbefe3;
+  --ok: #1f7a4d;
+  --ok-soft: #e3f3ea;
+  --code-bg: #eef1f5;
+  --font-body: "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+  /* 모노체 안의 한글은 본문 글꼴로 이어지게 */
+  --font-mono: "JetBrains Mono", "Noto Sans KR", "Malgun Gothic", ui-monospace, Consolas, monospace;
+  --step-0: 1rem;
+  --step-1: 1.2rem;
+  --step-2: 1.55rem;
+  --step-3: clamp(1.9rem, 4.4vw, 2.7rem);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f141a; --surface: #161d26; --fg: #e3e8ef; --muted: #9aa5b4; --line: #27313d;
+    --accent: #86a8ff; --accent-soft: #1d2a45; --issue: #f0a35e; --issue-soft: #33251a;
+    --ok: #6fd3a0; --ok-soft: #173126; --code-bg: #1c2530; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0f141a; --surface: #161d26; --fg: #e3e8ef; --muted: #9aa5b4; --line: #27313d;
+  --accent: #86a8ff; --accent-soft: #1d2a45; --issue: #f0a35e; --issue-soft: #33251a;
+  --ok: #6fd3a0; --ok-soft: #173126; --code-bg: #1c2530; color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  /* 한글을 단어(어절) 단위로 줄바꿈: "시작/해", "읽었습/니다"처럼 단어 중간에서 끊기지 않게 */
+  word-break: keep-all;
+  overflow-wrap: break-word;
+  line-height: 1.7;
+  padding-inline: 20px;
+  padding-block: 0 64px;
+}
+.wrap { max-width: 900px; margin: 0 auto; display: flex; flex-direction: column; gap: 72px; }
+a { color: var(--accent); text-underline-offset: 3px; }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+h1, h2, h3 { text-wrap: balance; line-height: 1.3; margin: 0; }
+p { margin: 0; max-width: 65ch; }
+code, .mono { font-family: var(--font-mono); font-size: 0.86em; }
+code { background: var(--code-bg); padding: 0.1em 0.4em; border-radius: 4px; }
+
+.draft-note {
+  margin-top: 20px;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--muted);
+  border: 1px dashed var(--line);
+  border-radius: 6px;
+  padding: 8px 12px;
+}
+
+/* 섹션 라벨: 경로처럼 */
+.path { font-family: var(--font-mono); font-size: 0.8rem; color: var(--muted); letter-spacing: 0.02em; }
+.path b { color: var(--accent); font-weight: 600; }
+section { display: flex; flex-direction: column; gap: 20px; }
+section > h2 { font-size: var(--step-2); }
+.lead { color: var(--muted); }
+
+/* Hero */
+.hero { display: flex; flex-direction: column; gap: 18px; padding-top: 40px; }
+.hero .name { font-size: 1rem; font-weight: 600; color: var(--muted); }
+.hero h1 { font-size: var(--step-3); font-weight: 700; letter-spacing: -0.01em; }
+.hero h1 em { font-style: normal; color: var(--accent); }
+.hero .sub { font-size: var(--step-1); color: var(--muted); max-width: none; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; list-style: none; padding: 0; margin: 0; }
+.chips li { font-family: var(--font-mono); font-size: 0.78rem; padding: 3px 9px; border: 1px solid var(--line); border-radius: 999px; color: var(--fg); background: var(--surface); }
+.links { display: flex; flex-wrap: wrap; gap: 18px; align-items: center; font-size: 0.95rem; }
+.copy { font: inherit; font-family: var(--font-mono); font-size: 0.85rem; background: var(--surface); color: var(--fg); border: 1px solid var(--line); border-radius: 6px; padding: 4px 10px; cursor: pointer; }
+.copy:hover { border-color: var(--accent); }
+
+/* 대표 프로젝트 */
+.feature { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 28px; display: flex; flex-direction: column; gap: 22px; }
+.feature-head { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px; align-items: baseline; }
+.feature-head h3 { font-size: var(--step-2); }
+.cycle { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 0; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+.cycle li { padding: 12px 12px 14px; border-right: 1px solid var(--line); min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+.cycle li:last-child { border-right: 0; }
+.cycle .step { font-family: var(--font-mono); font-size: 0.72rem; color: var(--accent); }
+.cycle strong { font-size: 0.95rem; }
+.cycle span { font-size: 0.85rem; color: var(--muted); line-height: 1.5; }
+.todo { font-family: var(--font-mono); font-size: 0.8rem; color: var(--issue); background: var(--issue-soft); border-radius: 6px; padding: 10px 12px; }
+
+/* 장애 보고서 카드 */
+.reports { display: flex; flex-direction: column; gap: 14px; }
+.report { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 22px 24px; display: grid; grid-template-columns: 120px minmax(0, 1fr); gap: 10px 20px; }
+.report h4 { grid-column: 1 / -1; margin: 0 0 4px; font-size: var(--step-1); }
+.report .meta { grid-column: 1 / -1; font-family: var(--font-mono); font-size: 0.75rem; color: var(--muted); display: flex; flex-wrap: wrap; gap: 6px 14px; }
+.report dt { font-family: var(--font-mono); font-size: 0.78rem; font-weight: 600; padding-top: 3px; }
+.report dd { margin: 0; min-width: 0; }
+.report dt.problem { color: var(--issue); }
+.report dt.fix { color: var(--ok); }
+pre { margin: 6px 0 0; background: var(--code-bg); border-radius: 6px; padding: 10px 12px; overflow-x: auto; font-family: var(--font-mono); font-size: 0.8rem; line-height: 1.6; }
+
+/* 작은 카드 */
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 20px 22px; display: flex; flex-direction: column; gap: 10px; }
+.card h3 { font-size: var(--step-1); }
+.card p { color: var(--muted); font-size: 0.95rem; }
+.card .chips { margin-top: auto; }
+
+/* 걸어온 길 */
+.timeline { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; border-left: 2px solid var(--line); }
+.timeline li { display: grid; grid-template-columns: 120px minmax(0, 1fr); gap: 4px 20px; padding: 14px 0 14px 20px; position: relative; }
+.timeline li::before { content: ""; position: absolute; left: -7px; top: 22px; width: 12px; height: 12px; border-radius: 50%; background: var(--bg); border: 2px solid var(--muted); }
+.timeline li.now::before { border-color: var(--accent); background: var(--accent); }
+.timeline .when { font-family: var(--font-mono); font-size: 0.8rem; color: var(--muted); padding-top: 3px; font-variant-numeric: tabular-nums; }
+.timeline strong { display: block; }
+.timeline p { color: var(--muted); font-size: 0.95rem; }
+
+/* 썸네일 (화면 캡처가 생기기 전까지는 프로젝트를 대표하는 요청·명령 한 줄) */
+.thumb {
+  position: relative; display: flex; flex-direction: column; justify-content: flex-end; gap: 4px;
+  aspect-ratio: 16 / 9; max-width: 100%; padding: 14px 16px; border-radius: 8px; overflow: hidden;
+  background-color: var(--code-bg);
+  background-image: linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size: 22px 22px;
+  font-family: var(--font-mono); font-size: 0.78rem; color: var(--fg);
+}
+.thumb-wide { aspect-ratio: 21 / 8; }
+.thumb .thumb-name { position: absolute; top: 12px; left: 16px; font-weight: 600; color: var(--accent); }
+.thumb code { background: var(--surface); border: 1px solid var(--line); padding: 3px 8px; align-self: flex-start; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.thumb .ok { color: var(--ok); }
+.thumb-note { position: absolute; top: 12px; right: 16px; font-size: 0.68rem; color: var(--muted); }
+
+/* 실제 화면 캡처 (있는 프로젝트만). 비율은 16:9(첫 줄 포스터가 제목까지 보이게)로 두고 위쪽 기준으로 자른다 */
+.shot { display: block; width: 100%; height: auto; border-radius: 8px; border: 1px solid var(--line); background: var(--code-bg); }
+.thumb-wide.shot { aspect-ratio: 16 / 9; object-fit: cover; object-position: top; }
+.shot-figure { margin: 0; max-width: 720px; display: flex; flex-direction: column; gap: 8px; }
+.shot-figure figcaption { font-size: 0.88rem; color: var(--muted); }
+/* 카드 썸네일 캡처: 16:9로 가운데를 잘라 핵심 화면이 보이게 */
+.thumb-shot { aspect-ratio: 16 / 9; object-fit: cover; object-position: center; }
+/* 상세의 세로 캡처 2장은 나란히 */
+.shot-pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin-top: 14px; }
+
+/* 나머지 프로젝트: 카드 그리드 + 아래 상세 */
+.grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.pcard {
+  font: inherit; text-align: left; color: var(--fg); cursor: pointer;
+  background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 12px;
+  display: flex; flex-direction: column; gap: 10px; min-width: 0;
+}
+.pcard:hover { border-color: var(--accent); }
+.pcard[aria-expanded="true"] { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+.pcard .pcard-body { display: flex; flex-direction: column; gap: 6px; padding: 2px 4px 4px; }
+.pcard .pcard-title { font-weight: 700; font-size: var(--step-1); }
+.pcard .pcard-tag { font-size: 0.8rem; color: var(--muted); font-weight: 400; margin-left: 6px; }
+.pcard .pcard-desc { font-size: 0.9rem; color: var(--muted); line-height: 1.55; }
+.pcard .pcard-more { font-family: var(--font-mono); font-size: 0.75rem; color: var(--accent); }
+.detail { display: flex; flex-direction: column; gap: 16px; padding-top: 8px; }
+.detail h3 { font-size: var(--step-2); }
+footer { border-top: 1px solid var(--line); padding-top: 24px; display: flex; flex-wrap: wrap; gap: 16px; justify-content: space-between; color: var(--muted); font-size: 0.9rem; }
+
+@media (max-width: 700px) {
+  .cycle { grid-template-columns: minmax(0, 1fr); }
+  .cycle li { border-right: 0; border-bottom: 1px solid var(--line); }
+  .cycle li:last-child { border-bottom: 0; }
+  .report, .timeline li { grid-template-columns: minmax(0, 1fr); }
+  .grid, .shot-pair { grid-template-columns: minmax(0, 1fr); }
+  .thumb-wide, .thumb-wide.shot { aspect-ratio: 16 / 9; }
+  .feature { padding: 20px; }
+}
+@media print {
+  .detail[hidden] { display: flex !important; }
+  .copy, .draft-note, .pcard-more { display: none; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .copy { transition: border-color 0.15s; }
+}
+</style>
+
+<div class="wrap">
+  <header class="hero">
+    <p class="name">윤재중 · Backend Developer (Java / Spring Boot)</p>
+    <h1>문제를 정의하는 데서 시작해, 설계부터 배포까지 <em>직접 해결해 내는</em> 백엔드 개발자</h1>
+    <p class="sub">투자심사역으로 100개가 넘는 스타트업 사업계획서를 검토했습니다. 지금은 그런 서비스를 직접 만듭니다.</p>
+    <ul class="chips" aria-label="기술 스택">
+      <li>Java 17·21</li><li>Spring Boot 3·4</li><li>Spring Security · JWT · OAuth2</li><li>JPA</li>
+      <li>WebSocket / STOMP</li><li>PostgreSQL</li><li>Docker</li><li>AWS EC2</li><li>Prometheus · Grafana</li><li>GitHub Actions</li>
+    </ul>
+    <div class="links">
+      <a href="https://github.com/yjdev101">github.com/yjdev101</a>
+      <span class="mono" id="email">yjdev101@gmail.com</span>
+      <button type="button" class="copy" id="copy-email">이메일 복사</button>
+    </div>
+  </header>
+
+  <section aria-labelledby="projects">
+    <p class="path">/projects</p>
+    <h2 id="projects">프로젝트</h2>
+
+    <article class="feature">
+      <img class="shot thumb-wide" src="img/reelview_main.webp" alt="ReelView 메인 화면: 작품 포스터 카드 목록과 장르·평점순 정렬" width="1022" height="892">
+      <div class="feature-head">
+        <h3>ReelView</h3>
+        <a href="https://github.com/yjdev101/reelview">GitHub</a>
+      </div>
+      <p>영화·드라마·애니메이션 리뷰 영상을 모아 보는 큐레이션 플랫폼의 백엔드입니다. 아이템을 정하는 것부터 Spring 기반 구현과 배포까지, 한 서비스의 사이클을 처음부터 끝까지 돌려 본 1인 프로젝트입니다.</p>
+      <ol class="cycle" aria-label="개발 사이클">
+        <li><span class="step">01 정의</span><strong>아이템 정의</strong><span>누구의 어떤 불편을 푸나</span></li>
+        <li><span class="step">02 설계</span><strong>도메인·API 설계</strong><span>Spring Boot 4, JPA</span></li>
+        <li><span class="step">03 구현</span><strong>인증·리뷰 기능</strong><span>Spring Security</span></li>
+        <li><span class="step">04 검증</span><strong>테스트 + CI</strong><span>GitHub Actions</span></li>
+        <li><span class="step">05 배포</span><strong>배포·모니터링</strong><span>Prometheus, Grafana</span></li>
+      </ol>
+      <figure class="shot-figure">
+        <img class="shot" src="img/reelview_summary.webp" alt="리뷰 영상 플레이어 아래에 유튜브 댓글 AI 요약 문단과 키워드 해시태그" width="854" height="643" loading="lazy">
+        <figcaption>리뷰 영상 아래에 유튜브 댓글을 AI로 요약하고, 키워드를 해시태그로 뽑아 보여 줍니다.</figcaption>
+      </figure>
+      <dl class="report" style="border:0;padding:0;background:none">
+        <h4>깨진 테스트를 고치고, 다시 깨지지 않게 막기</h4>
+        <dt class="problem">문제</dt>
+        <dd>코드를 올릴 때 테스트를 자동으로 돌리는 장치가 없어서, 일부 테스트가 깨진 채 방치되어 있었습니다.</dd>
+        <dt>원인</dt>
+        <dd>테스트 실행이 사람의 기억에 맡겨져 있었습니다.</dd>
+        <dt class="fix">해결</dt>
+        <dd>실패 원인을 하나씩 확인해 고친 뒤, 푸시할 때마다 테스트가 도는 CI(GitHub Actions)를 붙였습니다. 깨진 코드가 조용히 쌓이지 않게 했습니다.</dd>
+      </dl>
+    </article>
+
+    <div class="grid">
+      <button type="button" class="pcard" aria-expanded="true" aria-controls="detail-oshi">
+        <img class="shot thumb-shot" src="img/oshimarket_detail_01.webp" alt="" width="693" height="766" loading="lazy" style="object-position: top">
+        <span class="pcard-body">
+          <span class="pcard-title">오시마켓<span class="pcard-tag">팀 2인</span></span>
+          <span class="pcard-desc">굿즈 중고거래. 채팅·거래 담당, 보안과 동시성 문제 3건 해결</span>
+          <span class="pcard-more">트러블슈팅 보기 ↓</span>
+        </span>
+      </button>
+      <button type="button" class="pcard" aria-expanded="false" aria-controls="detail-moodlog">
+        <img class="shot thumb-shot" src="img/moodlog_main.webp" alt="" width="678" height="648" loading="lazy">
+        <span class="pcard-body">
+          <span class="pcard-title">MoodLog</span>
+          <span class="pcard-desc">AI 감정 일기. 소셜 로그인, 토큰 재발급, EC2 배포</span>
+          <span class="pcard-more">자세히 ↓</span>
+        </span>
+      </button>
+      <button type="button" class="pcard" aria-expanded="false" aria-controls="detail-kpi">
+        <span class="thumb" aria-hidden="true">
+          <span class="thumb-name">kpi-daily-report</span>
+          <code>kpi/daily_revenue.sql</code>
+          <code>@Scheduled · 매일 아침 → Slack</code>
+        </span>
+        <span class="pcard-body">
+          <span class="pcard-title">KPI 일일 리포트</span>
+          <span class="pcard-desc">첫 직장에서 손으로 하던 KPI 보고를 Spring Boot 배치로</span>
+          <span class="pcard-more">자세히 ↓</span>
+        </span>
+      </button>
+    </div>
+
+    <div class="detail" id="detail-oshi">
+      <h3>오시마켓 · 팀 프로젝트 (2인)</h3>
+      <p class="lead">서브컬처 굿즈 중고거래 플랫폼입니다. 채팅과 거래 도메인을 맡아 백엔드(WebSocket/STOMP, 거래 상태 관리)와 화면을 만들었습니다. 아래는 직접 찾아 고친 문제들입니다. <a href="https://github.com/oshi-market/oshi-market">GitHub</a></p>
+      <div class="shot-pair">
+        <figure class="shot-figure">
+          <img class="shot" src="img/oshimarket_detail_02.webp" alt="채팅방 위 거래 패널: 구매자가 거래를 요청해 상태가 거래요청이고, 판매자에게 수락·취소 버튼이 보임" width="706" height="686" loading="lazy">
+          <figcaption>구매자가 채팅방에서 거래를 요청하면, 판매자 화면에 수락 버튼이 바로 뜹니다.</figcaption>
+        </figure>
+        <figure class="shot-figure">
+          <img class="shot" src="img/oshimarket_detail_03.webp" alt="판매자가 수락해 거래 상태가 거래중으로 바뀌고 거래 완료·취소 버튼이 보임" width="710" height="700" loading="lazy">
+          <figcaption>수락하면 양쪽 모두 '거래중'으로 바뀝니다. 상태 변경은 커밋 뒤 WebSocket으로 상대 화면에 실시간 반영됩니다.</figcaption>
+        </figure>
+      </div>
+    <div class="reports">
+      <dl class="report">
+        <h4>남의 채팅방을 엿보거나 가짜 메시지를 넣을 수 있던 구멍</h4>
+        <p class="meta"><span>commit 7e6aefb</span><span>StompAuthInterceptor</span><span>보안</span></p>
+        <dt class="problem">문제</dt>
+        <dd><code>/sub/chat/*</code>을 구독하면 모든 채팅방 대화를 받을 수 있었고, <code>/sub/chat/5</code>로 직접 보내면 검사 없이 남의 방에 메시지가 뿌려졌습니다.</dd>
+        <dt>원인</dt>
+        <dd>구독 검사가 채팅방 주소 모양(<code>/sub/chat/숫자</code>)만 확인하고 다른 모양은 통과시켰습니다. 그런데 메시지 브로커는 <code>*</code>를 "모든 방"으로 해석했습니다. 전송은 아예 검사하지 않았습니다.</dd>
+        <dt class="fix">해결</dt>
+        <dd>허용 목록 방식으로 바꿨습니다. 구독은 참여한 채팅방과 개인 에러 큐만, 전송은 컨트롤러로 가는 <code>/pub/</code> 주소만 허용합니다. <code>/pub/</code>으로 들어온 메시지는 서비스에서 참여자인지 한 번 더 확인합니다.</dd>
+      </dl>
+
+      <dl class="report">
+        <h4>'채팅하기'를 두 번 누르면 500 에러</h4>
+        <p class="meta"><span>commit 7e6aefb</span><span>ChatService.openChatRoom</span><span>트랜잭션 · 동시성</span></p>
+        <dt class="problem">문제</dt>
+        <dd>같은 사람이 같은 상품에 버튼을 동시에 두 번 누르면, 방은 하나만 생기는데 두 번째 요청은 서버 오류를 받았습니다.</dd>
+        <dt>원인</dt>
+        <dd>두 요청이 모두 "방 없음"을 보고 만들려 해서 UNIQUE 제약에 걸렸습니다. 예외를 잡아 기존 방을 돌려주려 했지만, 트랜잭션에 이미 롤백 표시가 붙어 커밋 시점에 실패했습니다.</dd>
+        <dt class="fix">해결</dt>
+        <dd>예외를 잡는 대신 예외가 아예 나지 않게 했습니다. 두 요청 모두 같은 방을 돌려받습니다.
+          <pre>INSERT INTO chat_room (item_id, buyer_id, seller_id)
+VALUES (:itemId, :buyerId, :sellerId)
+ON CONFLICT (item_id, buyer_id) DO NOTHING</pre>
+        </dd>
+      </dl>
+
+      <dl class="report">
+        <h4>'거래 완료'와 '취소'가 동시에 들어오면</h4>
+        <p class="meta"><span>commit 7e6aefb</span><span>TransactionService.changeStatus</span><span>비관적 락</span></p>
+        <dt class="problem">문제</dt>
+        <dd>판매자의 완료와 구매자의 취소가 동시에 오면 둘 다 통과할 수 있었습니다. 최악의 경우 거래는 완료인데 상품이 다시 판매 중으로 올라갑니다.</dd>
+        <dt>원인</dt>
+        <dd>락은 있었지만 순서가 틀렸습니다. 거래 상태를 먼저 검사하고 상품을 나중에 잠가서, 두 요청이 모두 잠그기 전의 상태를 봤습니다.</dd>
+        <dt class="fix">해결</dt>
+        <dd>거래 row를 먼저 잠그고 나서 상태를 검사하도록 순서를 바꿨습니다. 두 번째 요청은 기다렸다가 바뀐 상태를 보고 거절됩니다.
+          <pre>SELECT t FROM Transaction t WHERE t.id = :id   -- @Lock(PESSIMISTIC_WRITE) → FOR UPDATE</pre>
+        </dd>
+      </dl>
+    </div>
+    </div>
+
+    <div class="detail" id="detail-moodlog" hidden>
+      <h3>MoodLog</h3>
+      <p class="lead">AI 감정 일기 서비스입니다. 소셜 로그인(OAuth2)과 JWT 재발급·블랙리스트로 인증 흐름을 설계하고, Docker로 AWS EC2에 배포했습니다. <a href="https://github.com/yjdev101/MoodLog">GitHub</a></p>
+      <ul class="chips"><li>OAuth2</li><li>JWT</li><li>Docker</li><li>AWS EC2</li></ul>
+      <div class="shot-pair">
+        <figure class="shot-figure">
+          <img class="shot" src="img/moodlog_detail_01.webp" alt="감정 기록 캘린더: 날짜마다 그날 기분이 다섯 단계 색과 이모지로 표시됨" width="670" height="747" loading="lazy">
+          <figcaption>하루 한 번 기분을 남기면, 달력에 다섯 단계 색으로 쌓입니다.</figcaption>
+        </figure>
+        <figure class="shot-figure">
+          <img class="shot" src="img/moodlog_detail_02.webp" alt="AI 감정 코칭 리포트: 최근 7일 기록의 감정 흐름 요약, 주요 요인 분석, 맞춤 조언" width="670" height="774" loading="lazy">
+          <figcaption>최근 7일·30일 기록을 AI가 읽고 감정 흐름과 요인, 조언을 정리해 줍니다.</figcaption>
+        </figure>
+      </div>
+    </div>
+
+    <div class="detail" id="detail-kpi" hidden>
+      <h3>KPI 일일 리포트</h3>
+      <p class="lead">첫 직장(족보닷컴)에서 매일 아침 손으로 뽑아 보고하던 매출·MAU를 서비스로 다시 만들었습니다. SQL 파일 하나가 KPI 하나가 되고, 스케줄러가 매일 아침 계산·저장하고 전일·전주 대비와 함께 Slack으로 보냅니다. 지난 날짜를 다시 계산하는 백필도 있습니다. <a href="https://github.com/yjdev101/kpi-daily-report">GitHub</a></p>
+      <ul class="chips"><li>Spring Boot</li><li>@Scheduled</li><li>SQL</li><li>Backfill</li><li>Slack</li></ul>
+    </div>
+  </section>
+  <section aria-labelledby="path">
+    <p class="path">/about</p>
+    <h2 id="path">걸어온 길</h2>
+    <p class="lead">경력은 다양하지만 하는 일은 같았습니다. 문제를 정의하는 일입니다. 이제는 정의한 문제를 직접 해결합니다.</p>
+    <ol class="timeline">
+      <li><span class="when">2010–2011</span><div><strong>족보닷컴 개발팀</strong><p>서비스 DB를 맡아 매일 아침 매출·MAU를 SQL로 뽑아 보고했습니다. 반복되는 요청은 쿼리 템플릿으로 정리했습니다.</p></div></li>
+      <li><span class="when">2013</span><div><strong>BCG · Research Assistant</strong><p>보험사 고객·매출 데이터를 엑셀에서 DB로 옮기고, 컨설턴트가 요청한 데이터를 SQL로 바로 뽑아 드렸습니다.</p></div></li>
+      <li><span class="when">2017–2019</span><div><strong>스프링캠프 · 투자심사역</strong><p>100개가 넘는 스타트업 사업계획서를 검토했고, 심사보고서를 직접 써서 서명한 투자 5건이 집행됐습니다. 어떤 기능이 사업에 중요한지 보는 눈을 여기서 길렀습니다.</p></div></li>
+      <li><span class="when">2020–2022</span><div><strong>엘리오앤컴퍼니 · 헬스케어 컨설턴트</strong><p>포항의 한 대형 병원과 대기시간 기반 진료 예약 서비스 NOTUS를 기획하고 프로토타입까지 만들었습니다. 그 다음 단계를 직접 만들 수 없다는 한계가 백엔드로 돌아온 이유입니다.</p></div></li>
+      <li class="now"><span class="when">2025–</span><div><strong>백엔드 개발자</strong><p>SBS아카데미 AIX 백엔드 과정에서 위 프로젝트들을 만들었습니다. 정보처리기사 필기 합격, 실기 준비 중입니다.</p></div></li>
+    </ol>
+  </section>
+
+  <footer>
+    <span>윤재중 · yjdev101@gmail.com</span>
+    <a href="https://github.com/yjdev101">github.com/yjdev101</a>
+  </footer>
+</div>
+
+<script>
+  (function () {
+    var cards = Array.prototype.slice.call(document.querySelectorAll('.pcard'));
+    cards.forEach(function (card) {
+      card.addEventListener('click', function () {
+        cards.forEach(function (c) {
+          var on = c === card;
+          c.setAttribute('aria-expanded', on ? 'true' : 'false');
+          document.getElementById(c.getAttribute('aria-controls')).hidden = !on;
+        });
+        document.getElementById(card.getAttribute('aria-controls')).scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      });
+    });
+  })();
+  document.getElementById('copy-email').addEventListener('click', function () {
+    var button = this;
+    var text = document.getElementById('email').textContent;
+    function done(label) { button.textContent = label; setTimeout(function () { button.textContent = '이메일 복사'; }, 1600); }
+    try {
+      navigator.clipboard.writeText(text).then(function () { done('복사됨'); }, function () { selectEmail(); done('직접 복사해 주세요'); });
+    } catch (e) { selectEmail(); done('직접 복사해 주세요'); }
+    function selectEmail() {
+      var range = document.createRange();
+      range.selectNodeContents(document.getElementById('email'));
+      var sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(range);
+    }
+  });
+</script>
