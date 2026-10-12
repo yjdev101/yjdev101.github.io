@@ -306,7 +306,7 @@ footer { border-top: 1px solid var(--line); padding-top: 24px; display: flex; fl
 <div class="wrap">
   <header class="hero">
     <p class="name">윤재중 · Backend Developer (Java / Spring Boot)</p>
-    <p class="stats">$ 4 projects · 테스트 100여 개 · GitHub Actions CI · AWS EC2 배포 · 트러블슈팅 9건 · <a href="#security">보안</a> · <a href="#ai">AI 활용</a></p>
+    <p class="stats">$ 4 projects · GitHub Actions CI · AWS EC2 배포 · 트러블슈팅 9건 · <a href="#security">보안</a> · <a href="#ai">AI 활용</a></p>
     <h1>문제를 정의하는 데서 시작해, 설계부터 배포까지 <em>직접 해결해 내는</em> 백엔드 개발자</h1>
     <p class="sub">Spring Boot 기반으로 JWT 인증, WebSocket 실시간 채팅, 거래 동시성 제어를 구현하고 테스트·CI·EC2 배포까지 직접 수행합니다. Claude Code로 개발 생산성을 높이되, 모든 변경 사항은 직접 검토·테스트한 뒤 반영합니다.</p>
     <ul class="chips" aria-label="기술 스택">
@@ -378,7 +378,7 @@ footer { border-top: 1px solid var(--line); padding-top: 24px; display: flex; fl
         <li><span class="step">02 설계</span><strong>도메인·API 설계</strong><span>Spring Boot 4, JPA</span></li>
         <li><span class="step">03 구현</span><strong>인증·리뷰 기능</strong><span>Spring Security</span></li>
         <li><span class="step">04 검증</span><strong>테스트 + CI</strong><span>테스트 14개, 푸시마다 GitHub Actions</span></li>
-        <li><span class="step">05 배포</span><strong>배포·모니터링</strong><span>Prometheus, Grafana</span></li>
+        <li><span class="step">05 배포</span><strong>배포·모니터링</strong><span>EC2 배포, Prometheus·Grafana(로컬 검증)</span></li>
       </ol>
       <figure class="arch-figure">
         <div class="arch-scroll">
@@ -442,7 +442,7 @@ footer { border-top: 1px solid var(--line); padding-top: 24px; display: flex; fl
       <details class="ts">
         <summary>유효한 토큰에 403이 반환되던 문제</summary>
         <dl class="report">
-        <p class="meta"><span>JwtAuthenticationFilter</span><span>SecurityConfig</span><span>인증 · 에러 처리</span></p>
+        <p class="meta"><span>JwtAuthenticationFilter</span><span><a href="https://github.com/yjdev101/reelview/blob/main/src/main/java/com/reelview/config/SecurityConfig.java">SecurityConfig</a></span><span>인증 · 에러 처리</span></p>
         <dt class="problem">문제</dt>
         <dd>유효한 토큰으로 요청해도 403이 반환되었습니다. 서버 로그 확인 결과 인증은 정상 통과했으며, 실제로는 컨트롤러에서 예외가 발생한 상태였습니다.</dd>
         <dt>원인</dt>
@@ -492,7 +492,7 @@ footer { border-top: 1px solid var(--line); padding-top: 24px; display: flex; fl
 
     <div class="detail" id="detail-oshi">
       <h3>OshiMarket · 팀 프로젝트 <span class="wip">진행 중</span></h3>
-      <p class="proj-meta">2026.09 – 진행 중 · 팀 2인 · 채팅·거래 도메인 백엔드와 화면 · 테스트 70여 개</p>
+      <p class="proj-meta">2026.09 – 진행 중 · 팀 2인 · 채팅·거래 도메인 백엔드와 화면 · 담당 도메인 테스트 33개(팀 전체 83개)</p>
       <p class="lead">서브컬처 굿즈 중고거래 플랫폼입니다. 채팅·거래 도메인을 담당해 백엔드(WebSocket/STOMP, 거래 상태 관리)와 화면을 구현했습니다. 아래는 직접 발견하고 해결한 문제입니다. <a href="https://github.com/oshi-market/oshi-market">GitHub</a></p>
       <dl class="problem-def">
         <dt>문제</dt>
@@ -502,7 +502,7 @@ footer { border-top: 1px solid var(--line); padding-top: 24px; display: flex; fl
       </dl>
       <dl class="status">
         <dt>현재</dt>
-        <dd>채팅, 거래 요청·수락·완료, 거래 상태 실시간 반영까지 구현했으며, 현재 팀 저장소에 병합 중입니다.</dd>
+        <dd>채팅, 거래 요청·수락·완료, 거래 상태 실시간 반영까지 구현해 팀 저장소 main에 병합했습니다(PR #12·#13·#19).</dd>
         <dt class="next">다음</dt>
         <dd>Docker·AWS EC2 배포, 모니터링(Prometheus·Grafana), 부하 테스트(k6)를 팀 단위로 진행할 예정입니다.</dd>
       </dl>
@@ -567,7 +567,7 @@ ON CONFLICT (item_id, buyer_id) DO NOTHING</pre>
 
     <div class="detail" id="detail-moodlog">
       <h3>MoodLog</h3>
-      <p class="proj-meta">2026.03 – 2026.05 · 1인 · 백엔드·화면·Docker 배포</p>
+      <p class="proj-meta">2026.03 – 2026.05 · 1인 · 백엔드·화면·Docker 배포 · 테스트 5개</p>
       <p class="lead">AI 기반 감정 일기 서비스입니다. 소셜 로그인(OAuth2)과 JWT 재발급·블랙리스트로 인증 체계를 설계하고, Docker로 AWS EC2에 배포했습니다. <a href="https://github.com/yjdev101/MoodLog">GitHub</a></p>
       <dl class="problem-def">
         <dt>문제</dt>
@@ -631,7 +631,7 @@ ON CONFLICT (item_id, buyer_id) DO NOTHING</pre>
 
     <div class="detail" id="detail-kpi">
       <h3>KPI 일일 리포트 <span class="wip">진행 중</span></h3>
-      <p class="proj-meta">2026.10 – 진행 중 · 1인 · 배치 백엔드 · 테스트 14개</p>
+      <p class="proj-meta">2026.10 – 진행 중 · 1인 · 배치 백엔드 · 테스트 15개</p>
       <p class="lead">첫 직장(족보닷컴)에서 매일 아침 수작업으로 산출·보고하던 매출·MAU를 서비스로 재구현했습니다. SQL 파일 1개가 KPI 1개가 되며, 스케줄러가 매일 아침 산출·저장 후 전일·전주 대비와 함께 Slack으로 전송합니다. 과거 일자를 재산출하는 백필 기능도 제공합니다. <a href="https://github.com/yjdev101/kpi-daily-report">GitHub</a></p>
       <dl class="problem-def">
         <dt>문제</dt>
@@ -659,7 +659,7 @@ ON CONFLICT (item_id, buyer_id) DO NOTHING</pre>
   <section aria-labelledby="security">
     <p class="path">/security</p>
     <h2 id="security">보안: 허용 목록 기반 설계</h2>
-    <p class="lead">2026년 10월 금융권 연쇄 해킹 사례처럼 공격이 자동화되면 사소한 취약점 하나가 곧 침해 사고로 이어집니다. 따라서 차단 대상을 열거하는 대신, 허용 대상만 명시하고 그 외는 모두 거부하는 방식으로 설계합니다.</p>
+    <p class="lead"><a href="https://www.fnnews.com/news/202610061335346343">2026년 10월 금융권 연쇄 해킹</a> 사례처럼 공격이 자동화되면 사소한 취약점 하나가 곧 침해 사고로 이어집니다. 따라서 차단 대상을 열거하는 대신, 허용 대상만 명시하고 그 외는 모두 거부하는 방식으로 설계합니다.</p>
     <div class="sec-list">
       <article class="sec-item">
         <p class="kind">권한 확인 누락 · OshiMarket</p>
@@ -679,13 +679,13 @@ String name = UUID.randomUUID() + ext;</pre>
         <p class="kind">동시 요청 · OshiMarket</p>
         <h3>거래 완료·취소 동시 요청 제어</h3>
         <p>이중 출금과 동일한 유형의 경쟁 조건 → 거래 row에 비관적 락(FOR UPDATE)을 선점한 뒤 상태를 검증</p>
-        <pre>Transaction t = transactionRepository.findByIdForUpdate(id);   // 잠금 먼저
+        <pre>Transaction t = checkParticipant(transactionRepository.findByIdForUpdate(id), memberId);   // 잠금 먼저
 if (!t.canChangeTo(next)) throw new BusinessException(INVALID_TRANSACTION_STATUS);</pre>
       </article>
       <article class="sec-item">
         <p class="kind">토큰 관리 · MoodLog · ReelView</p>
         <h3>불변 식별자 기반 토큰, 검증 실패 시 401</h3>
-        <p>Refresh Token 재발급과 로그아웃 토큰 블랙리스트를 적용하고, 토큰에는 불변인 DB id만 저장. 검증 실패는 500이 아닌 401로 응답</p>
+        <p>MoodLog: Refresh Token 재발급과 로그아웃 토큰 블랙리스트를 적용하고, 토큰에는 불변인 DB id만 저장. ReelView: 필터에서 토큰 검증 실패 시 500이 아닌 401로 응답</p>
       </article>
     </div>
   </section>
@@ -728,7 +728,7 @@ if (!t.canChangeTo(next)) throw new BusinessException(INVALID_TRANSACTION_STATUS
     <ol class="timeline">
       <li class="now"><span class="when">2025.10–</span><div><strong>백엔드 개발자</strong><p>SBS아카데미 AIX 백엔드 과정에서 위 프로젝트를 개발했습니다. 정보처리기사 필기에 합격했으며, 실기를 준비하고 있습니다.</p></div></li>
       <li><span class="when">2020–2022</span><div><strong>엘리오앤컴퍼니 · 헬스케어 컨설턴트</strong><p>대학병원·대형병원 대상 경영전략 컨설팅을 수행했으며, 대기시간 기반 진료 예약 서비스 NOTUS를 기획해 프로토타입까지 구현했습니다. 이후 단계를 직접 개발할 수 없다는 한계가 백엔드로 돌아온 계기가 되었습니다.</p></div></li>
-      <li><span class="when">2017 · 2019</span><div><strong>스프링캠프 · 투자심사역</strong><p>100건 이상의 스타트업 사업계획서를 검토했으며, 심사보고서를 직접 작성·서명한 투자 5건이 집행되었습니다. 사업의 핵심 기능을 판단하는 안목을 이 시기에 길렀습니다.</p></div></li>
+      <li><span class="when">2017, 2019<br>(2회 재직)</span><div><strong>스프링캠프 · 투자심사역</strong><p>100건 이상의 스타트업 사업계획서를 검토했으며, 심사보고서를 직접 작성·서명한 투자 5건이 집행되었습니다. 사업의 핵심 기능을 판단하는 안목을 이 시기에 길렀습니다.</p></div></li>
       <li><span class="when">2013</span><div><strong>BCG · Research Assistant</strong><p>보험사 고객·매출 데이터를 엑셀에서 DB로 이관하고, 컨설턴트 요청 데이터를 SQL로 즉시 추출해 제공했습니다.</p></div></li>
       <li><span class="when">2010–2013</span><div><strong>산업기능요원 · 족보닷컴 · 인포뱅크</strong><p>족보닷컴에서 서비스 DB를 담당하며 매일 아침 매출·MAU를 SQL로 산출해 보고하고, 반복 요청은 쿼리 템플릿으로 표준화했습니다. 인포뱅크에서는 금융사 모바일 웹·앱 구축 컨설팅을 수행했습니다.</p></div></li>
       <li class="edu"><span class="when">2007–2016</span><div><strong>서울대학교 산업공학과 · 공학사</strong><p>재학 중 소셜벤처 예비창업팀 <b>숨결</b>을 이끌며, 근육장애인 등 중증장애인의 수면 문제를 정의하고 이를 해결하기 위한 수면 보조 의료기기 창업을 시도했습니다. 창업진흥원 2015 글로벌창업활성화사업에 최종 선정되었습니다.</p></div></li>
