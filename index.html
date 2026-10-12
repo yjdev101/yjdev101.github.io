@@ -201,7 +201,7 @@ pre { margin: 6px 0 0; background: var(--code-bg); border-radius: 6px; padding: 
 .plan { border-left-color: var(--issue); }
 .problem-def .label, .plan .label { font-family: var(--font-mono); font-size: 0.75rem; font-weight: 600; color: var(--accent); margin: 0; }
 .plan .label { color: var(--issue); }
-.feature p, .detail p, section[aria-labelledby="path"] p { max-width: none; }
+.feature p, .detail p, section[aria-labelledby="path"] p, section[aria-labelledby="security"] p, section[aria-labelledby="ai"] p { max-width: none; }
 .hero .stats { font-family: var(--font-mono); font-size: 0.85rem; color: var(--accent); max-width: none; }
 .feature-links { display: flex; flex-wrap: wrap; gap: 14px; }
 .proj-meta { font-family: var(--font-mono); font-size: 0.8rem; color: var(--muted); }
@@ -233,6 +233,16 @@ pre { margin: 6px 0 0; background: var(--code-bg); border-radius: 6px; padding: 
 #reelview, .detail { scroll-margin-top: 16px; }
 html { scroll-behavior: smooth; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+/* 보안 · AI 활용 */
+.sec-list { display: flex; flex-direction: column; gap: 12px; }
+.sec-item { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 16px 20px; display: flex; flex-direction: column; gap: 6px; }
+.sec-item h3 { font-size: var(--step-1); }
+.sec-item .kind { font-family: var(--font-mono); font-size: 0.75rem; color: var(--issue); }
+.sec-item p { max-width: none; }
+.sec-item pre { margin-top: 4px; }
+.ai-grid { display: flex; flex-direction: column; gap: 14px; }
+.ai-grid .card ul { margin: 0; padding-left: 1.1em; color: var(--muted); font-size: 0.95rem; display: flex; flex-direction: column; gap: 4px; }
+#security, #ai { scroll-margin-top: 16px; }
 footer { border-top: 1px solid var(--line); padding-top: 24px; display: flex; flex-wrap: wrap; gap: 16px; justify-content: space-between; color: var(--muted); font-size: 0.9rem; }
 
 @media (max-width: 700px) {
@@ -276,6 +286,8 @@ footer { border-top: 1px solid var(--line); padding-top: 24px; display: flex; fl
   pre { font-size: 8.5pt; white-space: pre-wrap; }
   .timeline li { padding: 10px 0 10px 18px; grid-template-columns: 90px minmax(0, 1fr); }
   /* 프로젝트·걸어온 길은 새 페이지에서 시작 */
+  section[aria-labelledby="security"], section[aria-labelledby="ai"] { break-before: page; }
+  .sec-item, .ai-grid .card { break-inside: avoid; }
   .detail, section[aria-labelledby="path"] { break-before: page; border-top: 0; padding-top: 0; margin-top: 0; }
   .copy, .draft-note, .pcard-more { display: none; }
   /* PDF는 전부 펼친 상태라 바로가기 카드는 빼고, 그림·카드가 페이지 경계에서 잘리지 않게 */
@@ -293,11 +305,10 @@ footer { border-top: 1px solid var(--line); padding-top: 24px; display: flex; fl
 
 <div class="wrap">
   <header class="hero">
-    <p class="draft-note">DRAFT · 초안</p>
     <p class="name">윤재중 · Backend Developer (Java / Spring Boot)</p>
-    <p class="stats">$ 4 projects · 테스트 100여 개 · GitHub Actions CI · AWS EC2 배포 · 트러블슈팅 9건</p>
+    <p class="stats">$ 4 projects · 테스트 100여 개 · GitHub Actions CI · AWS EC2 배포 · 트러블슈팅 9건 · <a href="#security">보안</a> · <a href="#ai">AI 활용</a></p>
     <h1>문제를 정의하는 데서 시작해, 설계부터 배포까지 <em>직접 해결해 내는</em> 백엔드 개발자</h1>
-    <p class="sub">투자심사역으로 100건 이상의 스타트업 사업계획서를 검토했으며, 현재는 그러한 서비스를 직접 개발합니다.</p>
+    <p class="sub">Spring Boot로 JWT 인증, WebSocket 실시간 채팅, 거래 동시성 제어를 구현하고 테스트·CI·EC2 배포까지 직접 다룹니다. Claude Code로 개발 속도를 높이되, 모든 변경은 직접 리뷰하고 테스트한 뒤 반영합니다.</p>
     <ul class="chips" aria-label="기술 스택">
       <li>Java 17·21</li><li>Spring Boot 3·4</li><li>Spring Security · JWT · OAuth2</li><li>JPA</li>
       <li>WebSocket / STOMP</li><li>MySQL · PostgreSQL</li><li>Docker</li><li>AWS EC2</li><li>Prometheus · Grafana</li><li>GitHub Actions</li>
@@ -318,7 +329,7 @@ footer { border-top: 1px solid var(--line); padding-top: 24px; display: flex; fl
         <img class="shot thumb-shot" src="img/reelview_main.webp" alt="" width="1022" height="892" loading="lazy" style="object-position: top">
         <span class="pcard-body">
           <span class="pcard-title">ReelView<span class="pcard-tag">대표 · 1인</span></span>
-          <span class="pcard-desc">리뷰 영상 큐레이션. 문제 정의부터 설계·EC2 배포까지</span>
+          <span class="pcard-desc">리뷰 영상 큐레이션. JWT 인증, 파일 업로드, CI, EC2 배포</span>
           <span class="pcard-more">보러 가기 ↓</span>
         </span>
       </a>
@@ -645,10 +656,75 @@ ON CONFLICT (item_id, buyer_id) DO NOTHING</pre>
       </dl>
     </div>
   </section>
+  <section aria-labelledby="security">
+    <p class="path">/security</p>
+    <h2 id="security">보안: 허용한 것만 통과시킨다</h2>
+    <p class="lead">2026년 10월 금융권 연쇄 해킹처럼 공격이 자동화되면, 빈틈 하나가 곧 사고입니다. 막을 것을 나열하는 대신 허용할 것만 정해 둡니다.</p>
+    <div class="sec-list">
+      <article class="sec-item">
+        <p class="kind">권한 확인 누락 · OshiMarket</p>
+        <h3>남의 채팅방 구독·메시지 위조 차단</h3>
+        <p><code>/sub/chat/*</code> 구독 한 번으로 모든 방을 엿볼 수 있던 구멍 → 구독·전송 주소를 허용 목록으로 제한하고 참여자만 통과</p>
+        <pre>if (!CHAT_TOPIC.matcher(dest).matches()                 // ^/sub/chat/(\d+)$ 만
+        || !isParticipant.test(roomId, memberId)) throw new MessageDeliveryException(...);</pre>
+      </article>
+      <article class="sec-item">
+        <p class="kind">경로 조작 · ReelView</p>
+        <h3>업로드 파일명은 서버가 정한다</h3>
+        <p>확장자는 허용 목록으로, 저장 이름은 UUID로. 사용자 입력이 저장 경로에 들어가지 않음</p>
+        <pre>if (!ALLOWED_EXTENSIONS.contains(ext)) throw ...;         // .mp4 .mov .avi
+String name = UUID.randomUUID() + ext;</pre>
+      </article>
+      <article class="sec-item">
+        <p class="kind">동시 요청 · OshiMarket</p>
+        <h3>완료·취소가 동시에 통과하지 않게</h3>
+        <p>이중 출금과 같은 유형 → 거래 row를 먼저 잠그고(FOR UPDATE) 그다음 상태를 검사</p>
+        <pre>Transaction t = transactionRepository.findByIdForUpdate(id);   // 잠금 먼저
+if (!t.canChangeTo(next)) throw new BusinessException(INVALID_TRANSACTION_STATUS);</pre>
+      </article>
+      <article class="sec-item">
+        <p class="kind">토큰 관리 · MoodLog · ReelView</p>
+        <h3>토큰엔 불변 id, 실패는 401로</h3>
+        <p>Refresh Token 재발급과 로그아웃 블랙리스트, 토큰에는 바뀌지 않는 DB id만. 검증 실패는 500이 아닌 401</p>
+      </article>
+    </div>
+  </section>
+  <section aria-labelledby="ai">
+    <p class="path">/ai</p>
+    <h2 id="ai">AI와 개발하는 방식</h2>
+    <p class="lead">Claude Code를 페어 프로그래머로 씁니다. 속도는 AI에게서 얻고, 무엇을 반영할지에 대한 판단과 책임은 제가 집니다.</p>
+    <div class="ai-grid">
+      <article class="card">
+        <h3>1. 검증 루프</h3>
+        <ul>
+          <li>AI가 만든 변경은 별도 브랜치에 두고, 고친 곳마다 <code>TODO(review)</code>를 표시합니다.</li>
+          <li>직접 diff를 읽고 테스트를 돌린 뒤, 실제 변경 커밋만 골라(cherry-pick) main에 반영합니다.</li>
+          <li>OshiMarket의 보안·동시성 문제 3건도 AI와 코드 리뷰를 하며 찾았고, 수정안을 직접 검토하고 테스트로 확인한 뒤 팀 PR로 올렸습니다.</li>
+        </ul>
+      </article>
+      <article class="card">
+        <h3>2. 설명할 수 있는 코드만</h3>
+        <ul>
+          <li>리뷰하며 이해한 내용은 '질문 → 한 줄 답 → 근거 → 코드 위치' 형식으로 정리합니다.</li>
+          <li>제가 설명할 수 없는 코드는 이 포트폴리오의 트러블슈팅 사례로 쓰지 않았습니다.</li>
+        </ul>
+      </article>
+      <article class="card">
+        <h3>3. 토큰 사용 전략</h3>
+        <ul>
+          <li>주간 사용 한도 안에서 계획합니다. 대화가 길어질수록 매번 전체 맥락을 다시 읽어 비용이 커지므로, 작업 단위마다 새 세션을 엽니다.</li>
+          <li>세션 사이의 맥락은 짧은 메모 파일로 넘기고, 읽을 파일 범위를 지정해 불필요한 탐색을 줄입니다.</li>
+          <li>반복 학습은 AI 없이 하고, 큰 작업은 한도가 갱신된 직후에 몰아서 맡깁니다.</li>
+        </ul>
+      </article>
+    </div>
+    <p>서비스 안에서도 같은 원칙을 씁니다. ReelView는 댓글 요약 결과를 DB에 캐싱해 같은 영상에 API를 다시 호출하지 않고, KPI 리포트의 자연어 질의는 LLM이 SQL을 직접 만들지 않고 <strong>검증된 SQL 템플릿 중에서만 고르도록</strong> 설계하고 있습니다. 임의의 쿼리가 실행될 여지를 처음부터 두지 않기 위해서입니다.</p>
+  </section>
+
   <section aria-labelledby="path">
     <p class="path">/about</p>
     <h2 id="path">걸어온 길</h2>
-    <p class="lead">경력은 다양하지만 본질은 같았습니다. 문제를 정의하는 일입니다. 이제는 정의한 문제를 직접 해결합니다.</p>
+    <p class="lead">첫 직장에서 서비스 DB와 SQL을 다뤘고, 이후 투자·컨설팅에서 서비스를 밖에서 보았습니다. 지금은 그 서비스를 코드로 직접 만듭니다.</p>
     <ol class="timeline">
       <li class="now"><span class="when">2025.10–</span><div><strong>백엔드 개발자</strong><p>SBS아카데미 AIX 백엔드 과정에서 위 프로젝트를 개발했습니다. 정보처리기사 필기에 합격했으며, 실기를 준비하고 있습니다.</p></div></li>
       <li><span class="when">2020–2022</span><div><strong>엘리오앤컴퍼니 · 헬스케어 컨설턴트</strong><p>대학병원·대형병원 대상 경영전략 컨설팅을 수행했으며, 대기시간 기반 진료 예약 서비스 NOTUS를 기획해 프로토타입까지 구현했습니다. 이후 단계를 직접 개발할 수 없다는 한계가 백엔드로 돌아온 계기가 되었습니다.</p></div></li>
