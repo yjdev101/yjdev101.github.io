@@ -352,8 +352,8 @@ footer { border-top: 1px solid var(--line); padding-top: 24px; display: flex; fl
       <a class="pcard" href="#detail-kpi">
         <img class="shot thumb-shot" src="img/kpi_main.webp" alt="" width="588" height="330" loading="lazy">
         <span class="pcard-body">
-          <span class="pcard-title">KPI 일일 리포트<span class="pcard-tag wip">진행 중</span></span>
-          <span class="pcard-desc">첫 직장의 수작업 KPI 보고를 Spring Boot 배치로 자동화</span>
+          <span class="pcard-title">KPI 일일 리포트<span class="pcard-tag">AI 위임 실험</span></span>
+          <span class="pcard-desc">코드 작성을 AI에 전면 위임하고 결과만 검증한 KPI 보고 자동화</span>
           <span class="pcard-more">보러 가기 ↓</span>
         </span>
       </a>
@@ -630,9 +630,9 @@ ON CONFLICT (item_id, buyer_id) DO NOTHING</pre>
     </div>
 
     <div class="detail" id="detail-kpi">
-      <h3>KPI 일일 리포트 <span class="wip">진행 중</span></h3>
-      <p class="proj-meta">2026.10 – 진행 중 · 1인 · 배치 백엔드 · 테스트 15개</p>
-      <p class="lead">첫 직장(족보닷컴)에서 매일 아침 수작업으로 산출·보고하던 매출·MAU를 서비스로 재구현했습니다. SQL 파일 1개가 KPI 1개가 되며, 스케줄러가 매일 아침 산출·저장 후 전일·전주 대비와 함께 Slack으로 전송합니다. 과거 일자를 재산출하는 백필 기능도 제공합니다. <a href="https://github.com/yjdev101/kpi-daily-report">GitHub</a></p>
+      <h3>KPI 일일 리포트 · AI 위임 실험</h3>
+      <p class="proj-meta">2026.10 · 1인 · AI 전면 위임 · 테스트 14개</p>
+      <p class="lead">코드를 직접 작성하지 않고 전 과정을 Claude Code에 위임한 뒤 결과만 검증한 실험 프로젝트입니다. 소재는 첫 직장(족보닷컴)에서 매일 아침 수작업으로 산출·보고하던 매출·MAU입니다. SQL 파일 1개가 KPI 1개가 되며, 스케줄러가 매일 아침 산출·저장 후 전일·전주 대비와 함께 Slack으로 전송합니다. 과거 일자를 재산출하는 백필 기능도 제공합니다. <a href="https://github.com/yjdev101/kpi-daily-report">GitHub</a></p>
       <dl class="problem-def">
         <dt>문제</dt>
         <dd>첫 직장에서 매일 아침 전일 매출·MAU를 SQL로 직접 산출해 보고함. 반복 요청은 쿼리 템플릿으로 표준화했으나, 실행과 보고는 여전히 수작업에 의존함</dd>
@@ -642,7 +642,7 @@ ON CONFLICT (item_id, buyer_id) DO NOTHING</pre>
       <ul class="chips"><li>Spring Boot</li><li>@Scheduled</li><li>SQL</li><li>Backfill</li><li>Slack</li></ul>
       <figure class="shot-figure" style="max-width:588px">
         <img class="shot" src="img/kpi_slack.webp" alt="Slack 채널에 KPI Daily Report 앱이 보낸 일일 KPI 메시지: 2026-10-10 기준 8개 지표와 전일·전주 대비 증감" width="588" height="230" loading="lazy">
-        <figcaption>Slack Incoming Webhook으로 실제 수신한 리포트입니다. 연동 검증 중 Spring Boot 4의 모듈 분리로 웹훅 설정 시 애플리케이션이 기동되지 않는 문제를 발견해 수정했습니다.</figcaption>
+        <figcaption>Slack Incoming Webhook으로 실제 수신한 리포트입니다. 실제 연동 검증 과정에서 Spring Boot 4의 모듈 분리로 웹훅 설정 시 애플리케이션이 기동되지 않는 문제가 드러났으며, 이 역시 AI에 수정을 위임했습니다.</figcaption>
       </figure>
       <figure class="shot-figure" style="max-width:500px">
         <img class="shot" src="img/kpi_chart.webp" alt="최근 40일 DAU와 매출 추이 그래프. DAU는 주말마다 하락하는 주기가 보임" width="500" height="428" loading="lazy">
@@ -650,9 +650,7 @@ ON CONFLICT (item_id, buyer_id) DO NOTHING</pre>
       </figure>
       <dl class="status">
         <dt>현재</dt>
-        <dd>산출·저장, 매일 07시 스케줄링, 전일·전주 비교, 백필, Slack 전송까지 구현했으며, 정확도 테스트와 실제 Slack 전송 검증을 완료했습니다. 배포는 진행 예정입니다.</dd>
-        <dt class="next">다음</dt>
-        <dd>배포와 이상치 알림(전주 대비 ±30%)을 추가하고, 검증된 SQL 템플릿만 선택해 응답하는 자연어 질의("지난주 결제자가 왜 감소했나?")로 확장할 계획입니다.</dd>
+        <dd>산출·저장, 매일 07시 스케줄링, 전일·전주 비교, 백필, Slack 전송까지 구현했으며, 정확도 테스트와 실제 Slack 전송 검증을 완료했습니다. 서버 배포는 수행하지 않았습니다.</dd>
       </dl>
     </div>
   </section>
@@ -707,6 +705,7 @@ if (!t.canChangeTo(next)) throw new BusinessException(INVALID_TRANSACTION_STATUS
         <ul>
           <li>리뷰 과정에서 이해한 내용은 '질문 → 요약 답변 → 근거 → 코드 위치' 형식으로 문서화합니다.</li>
           <li>직접 설명할 수 없는 코드는 본 포트폴리오의 트러블슈팅 사례에서 제외했습니다.</li>
+          <li>KPI 일일 리포트는 예외적으로 코드 작성을 AI에 전면 위임하고 결과만 검증한 실험 프로젝트이며, 그 사실을 명시합니다.</li>
         </ul>
       </article>
       <article class="card">
@@ -718,7 +717,7 @@ if (!t.canChangeTo(next)) throw new BusinessException(INVALID_TRANSACTION_STATUS
         </ul>
       </article>
     </div>
-    <p>서비스 설계에도 동일한 원칙을 적용합니다. ReelView는 댓글 요약 결과를 DB에 캐싱해 동일 영상에 대한 API 중복 호출을 방지하며, KPI 리포트의 자연어 질의는 LLM이 SQL을 직접 생성하지 않고 <strong>검증된 SQL 템플릿 중에서만 선택하도록</strong> 설계 중입니다. 임의 쿼리 실행 가능성을 원천 차단하기 위함입니다.</p>
+    <p>서비스 설계에도 동일한 원칙을 적용합니다. ReelView는 댓글 요약 결과를 DB에 캐싱해 동일 영상에 대한 API 중복 호출을 방지합니다.</p>
   </section>
 
   <section aria-labelledby="path">
