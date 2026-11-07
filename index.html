@@ -553,7 +553,7 @@ ON CONFLICT (item_id, buyer_id) DO NOTHING</pre>
         <dl class="report">
         <p class="meta"><span><a href="https://github.com/oshi-market/oshi-market/commit/7e6aefb">commit 7e6aefb</a></span><span>TransactionService.changeStatus</span><span>비관적 락</span></p>
         <dt class="problem">문제</dt>
-        <dd>판매자의 완료 요청과 구매자의 취소 요청이 동시에 들어오면 둘 다 통과할 수 있었습니다. 최악의 경우 거래는 완료 상태인데 상품은 다시 판매 중으로 전환됩니다.</dd>
+        <dd>판매자의 완료 요청과 구매자의 취소 요청이 동시에 들어오면 둘 다 통과할 수 있었습니다. 최악의 경우 양쪽 모두 성공 응답을 받은 뒤, 나중에 처리된 요청이 앞선 결과를 덮어쓸 수 있었습니다.</dd>
         <dt>원인</dt>
         <dd>락은 존재했지만 획득 순서가 잘못되어 있었습니다. 거래 상태를 먼저 검사한 뒤 상품에 락을 걸어, 두 요청이 모두 락 획득 이전의 상태를 읽었습니다.</dd>
         <dt class="fix">해결</dt>
